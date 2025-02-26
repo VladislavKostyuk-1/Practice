@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://df3yfaf116a33"]
+
+[ext_resource type="Script" path="res://Entities/States/EnemyStates/SlimeStates/Jumping/state_slime_jumping.gd" id="1_3ogng"]
+
+[node name="StateSlimeJumping" type="Node"]
+script = ExtResource("1_3ogng")
+jump_speed = null
+jump_height = null
+jump_duration = null
+attack_range = null
+attack_cooldown = null
+property_path = null
+state_name = "Jump"
+anim_names = Array[String](["JumpAttackStart", "JumpAttackEnd"])
+looped_anim = false
+look_direction = 2
+block_direction_change = true
+can_move = null
+rotate_hurtbox_on_start = null
+lock_hitbox_rotation_by_90 = null

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbf7n7fdve8wi"]
+
+[ext_resource type="Script" path="res://Entities/States/EnemyStates/Chase/state_chase.gd" id="1_qmxrp"]
+
+[node name="Chase" type="Node"]
+script = ExtResource("1_qmxrp")
+state_name = "Chase"
+anim_names = Array[String](["ChaseUp", "ChaseDown", "ChaseLeft", "ChaseRight"])
+look_direction = 1

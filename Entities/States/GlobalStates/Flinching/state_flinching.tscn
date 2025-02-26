@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgftc7n4uy4ta"]
+
+[ext_resource type="Script" path="res://Entities/States/GlobalStates/Flinching/state_flinching.gd" id="1_0g0n7"]
+
+[node name="StateFlinching" type="Node"]
+script = ExtResource("1_0g0n7")
+state_name = "Flinching"
+anim_names = Array[String](["Flinching"])
+looped_anim = false
+look_direction = 2
+can_move = false

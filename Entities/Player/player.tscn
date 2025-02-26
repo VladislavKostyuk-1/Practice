@@ -1,0 +1,225 @@
+[gd_scene load_steps=26 format=3 uid="uid://b84v31t00u7w6"]
+
+[ext_resource type="Script" path="res://Entities/Player/player.gd" id="1_yxdrh"]
+[ext_resource type="Texture2D" uid="uid://d4aikl56govu7" path="res://Entities/Player/PlayerIdle.png" id="2_aq455"]
+[ext_resource type="Script" path="res://Entities/States/state_machine.gd" id="3_lg7uk"]
+[ext_resource type="PackedScene" uid="uid://dl6uvvqkd3lo4" path="res://Entities/States/GlobalStates/Idle/state_idle.tscn" id="4_uu57u"]
+[ext_resource type="Script" path="res://Entities/Components/component_manager.gd" id="5_1l4b0"]
+[ext_resource type="PackedScene" uid="uid://b83fpqw37pvwk" path="res://Entities/Components/GlobalComponents/Health/component_health.tscn" id="6_770vf"]
+[ext_resource type="PackedScene" uid="uid://dc5wg5t7jmdht" path="res://Entities/Collisions/Hitbox/hitbox.tscn" id="7_tlii7"]
+[ext_resource type="PackedScene" uid="uid://dyujdmghjs3ub" path="res://Entities/Collisions/Hurtbox/hurt_box.tscn" id="8_gnbcx"]
+[ext_resource type="Resource" uid="uid://dkplof22hrqqg" path="res://Entities/Enemies/Slime/AttackResources/slime_jump.tres" id="9_qg7or"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lo103"]
+atlas = ExtResource("2_aq455")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxrsf"]
+atlas = ExtResource("2_aq455")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_whfga"]
+atlas = ExtResource("2_aq455")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ox34"]
+atlas = ExtResource("2_aq455")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k7tvp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lo103")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxrsf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whfga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ox34")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n54yg"]
+radius = 6.0
+height = 13.0
+
+[sub_resource type="Animation" id="Animation_56xcn"]
+resource_name = "IdleDown"
+length = 0.8
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_po7ak"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mptro"]
+_data = {
+"IdleDown": SubResource("Animation_56xcn"),
+"RESET": SubResource("Animation_po7ak")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1hnl0"]
+animation = &"IdleDown"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_er1nu"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_o7bce"]
+states/Start/position = Vector2(206, 100)
+states/idle/node = SubResource("AnimationNodeAnimation_1hnl0")
+states/idle/position = Vector2(383, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_er1nu")]
+
+[sub_resource type="LabelSettings" id="LabelSettings_r2mxf"]
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_he4ip"]
+font_size = 10
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_815wy"]
+size = Vector2(10, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2gem5"]
+size = Vector2(68, 55)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("BoundBox", "HurtBox", "HitBox", "StMachine") groups=["Player"]]
+z_index = 1
+z_as_relative = false
+y_sort_enabled = true
+collision_layer = 6
+script = ExtResource("1_yxdrh")
+speed = 200.0
+BoundBox = NodePath("CollisionShape2D")
+HurtBox = NodePath("HurtBox")
+HitBox = NodePath("HitBox")
+StMachine = NodePath("StateMachine")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_k7tvp")
+animation = &"idle"
+offset = Vector2(0, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("CapsuleShape2D_n54yg")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+process_callback = 0
+
+[node name="HitboxAnimations" type="AnimationPlayer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mptro")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+active = false
+tree_root = SubResource("AnimationNodeStateMachine_o7bce")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("AnimPlayer", "AnimTree")]
+script = ExtResource("3_lg7uk")
+AnimPlayer = NodePath("../AnimationPlayer")
+AnimTree = NodePath("../AnimationTree")
+
+[node name="Idle" parent="StateMachine" instance=ExtResource("4_uu57u")]
+
+[node name="StateLabel" type="Label" parent="."]
+z_index = 1
+z_as_relative = false
+y_sort_enabled = true
+offset_left = -12.0
+offset_top = -47.0
+offset_right = 28.0
+offset_bottom = -24.0
+text = "State
+"
+label_settings = SubResource("LabelSettings_r2mxf")
+
+[node name="HealthLabel" type="Label" parent="."]
+offset_left = -12.0
+offset_top = -61.0
+offset_right = 40.0
+offset_bottom = -38.0
+text = "Health
+"
+label_settings = SubResource("LabelSettings_he4ip")
+
+[node name="Components" type="Node2D" parent="."]
+script = ExtResource("5_1l4b0")
+
+[node name="Health" parent="Components" node_paths=PackedStringArray("health_label", "StMachine") instance=ExtResource("6_770vf")]
+health_label = NodePath("../../HealthLabel")
+StMachine = NodePath("../../StateMachine")
+
+[node name="HitBox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("7_tlii7")]
+health_component = NodePath("../Components/Health")
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_815wy")
+
+[node name="HurtBox" parent="." instance=ExtResource("8_gnbcx")]
+Stats = ExtResource("9_qg7or")
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(3, -11.5)
+shape = SubResource("RectangleShape2D_2gem5")
+
+[editable path="HitBox"]
+[editable path="HurtBox"]

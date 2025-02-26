@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl6uvvqkd3lo4"]
+
+[ext_resource type="Script" path="res://Entities/Player/StateIdle.gd" id="1_q0dng"]
+
+[node name="Idle" type="Node"]
+script = ExtResource("1_q0dng")
+state_name = "Idle"
+anim_names = Array[String](["IdleUp", "IdleDown", "IdleLeft", "IdleRight"])

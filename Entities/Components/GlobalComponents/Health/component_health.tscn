@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b83fpqw37pvwk"]
+
+[ext_resource type="Script" path="res://Entities/Components/GlobalComponents/Health/component_health.gd" id="1_oqlgk"]
+[ext_resource type="Script" path="res://Entities/Components/GlobalComponents/Health/component_health_stat_manager.gd" id="2_0ytuh"]
+
+[node name="Health" type="Node2D" node_paths=PackedStringArray("stat_manager")]
+script = ExtResource("1_oqlgk")
+component_name = "Health"
+stat_manager = NodePath("StatManager")
+
+[node name="StatManager" type="Node" parent="."]
+script = ExtResource("2_0ytuh")

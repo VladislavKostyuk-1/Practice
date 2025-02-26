@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://3i4ip8km5pbx"]
+
+[ext_resource type="Script" path="res://Entities/States/EnemyStates/Idle/enemy_idle.gd" id="1_mo8eb"]
+
+[node name="EnemyIdle" type="Node"]
+script = ExtResource("1_mo8eb")
+state_name = "Idle"
+anim_names = Array[String](["IdleUp", "IdleDown", "IdleLeft", "IdleRight"])
+look_direction = 1

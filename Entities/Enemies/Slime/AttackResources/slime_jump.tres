@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AttackInfo" load_steps=2 format=3 uid="uid://dkplof22hrqqg"]
+
+[ext_resource type="Script" path="res://Entities/Components/AttackInfo/attack_info.gd" id="1_hqhhd"]
+
+[resource]
+script = ExtResource("1_hqhhd")
+damage = 20
+knockback = 200.0
+attacker_as_knockback_origin = true
+can_friendly_fire = false

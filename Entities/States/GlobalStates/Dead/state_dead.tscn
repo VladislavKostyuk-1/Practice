@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ch0bbo8ilcecr"]
+
+[ext_resource type="Script" path="res://Entities/States/GlobalStates/Dead/state_dead.gd" id="1_1367k"]
+
+[node name="StateDead" type="Node"]
+script = ExtResource("1_1367k")
+state_name = "Dead"
+anim_names = Array[String](["Death"])
+can_move = false
